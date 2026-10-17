@@ -2,13 +2,14 @@ const fs=require('fs'), vm=require('vm'), assert=require('assert'), path=require
 const data=JSON.parse(fs.readFileSync('dist/data.json','utf8'));
 const fields={};let clipboard='';let exported=null;
 const document={querySelector:s=>fields[s],querySelectorAll:()=>[],createElement:()=>({click(){},remove(){},select(){},style:{}}),body:{append(){}},addEventListener(){}};
-const context=vm.createContext({document,location:{pathname:'/catalog/',search:''},history:{replaceState(){}},URL,URLSearchParams,Blob,console,setTimeout:()=>0,clearTimeout(){},localStorage:{getItem(){return '[]'},setItem(){}},navigator:{clipboard:{async writeText(s){clipboard=s;}}}});
+const context=vm.createContext({window:{ENERGY_LANG:'ru'},document,location:{pathname:'/catalog/',search:''},history:{replaceState(){}},URL,URLSearchParams,Blob,console,setTimeout:()=>0,clearTimeout(){},localStorage:{getItem(){return '[]'},setItem(){}},navigator:{clipboard:{async writeText(s){clipboard=s;}}}});
+vm.runInContext(fs.readFileSync('dist/prompts.js','utf8'),context);
 vm.runInContext(fs.readFileSync('dist/app.js','utf8').replace(/start\(\);\s*$/,''),context);
-vm.runInContext('DATA='+JSON.stringify(data)+';',context);
+vm.runInContext('DATA='+JSON.stringify(data)+';DATASETS={ru:DATA,ro:'+fs.readFileSync('dist/data.ro.json','utf8')+'};',context);
 const run=s=>vm.runInContext(s,context);
-function field(value=''){return {value,checked:false,innerHTML:'',disabled:false,classList:{add(){},remove(){}}};}
-for(const id of ['q','sector-filter','priority-filter','day-filter','sort-filter','finance-only','wave-only','saved-only','result-count','export-csv','company-results','toast','research-company','research-sector','research-task','research-lang','research-extra','prompt-text','search-shortcuts']) fields['#'+id]=field();
-fields['#research-lang'].selectedOptions=[{text:'Русский и румынский'}];fields['#sort-filter'].value='id';
+function field(value=''){return {value,dataset:{},checked:false,innerHTML:'',disabled:false,classList:{add(){},remove(){}}};}
+for(const id of ['q','sector-filter','priority-filter','day-filter','sort-filter','finance-only','wave-only','saved-only','result-count','export-csv','company-results','toast','research-company','research-sector','research-task','research-lang','research-sources','prompt-status','research-extra','prompt-text','search-shortcuts']) fields['#'+id]=field();
+fields['#research-lang'].value='ru';fields['#research-sources'].value='both';fields['#research-lang'].selectedOptions=[{text:'Русский и румынский'}];fields['#sort-filter'].value='id';
 run('filterCatalog()');assert.equal(run('filtered.length'),data.companies.length);
 fields['#finance-only'].checked=true;run('filterCatalog()');assert.equal(run('filtered.length'),25);
 fields['#wave-only'].checked=true;run('filterCatalog()');assert.equal(run('filtered.length'),data.companies.filter(c=>c.wave&&c.finance).length);
@@ -40,5 +41,5 @@ for(const id of ['directory-prev','directory-next','directory-export','directory
 run("directoryRows=directoryFilter('registry');directoryPage=99999;renderDirectory('registry')");assert(fields['#directory-next'].disabled);assert(fields['#directory-table'].innerHTML.includes('<table'));
 run("directoryRows=directoryFilter('public','','','',10000);directoryPage=0;renderDirectory('public')");assert(fields['#directory-prev'].disabled);assert(fields['#directory-table'].innerHTML.includes('строка'));
 assert(!registry.columns.includes('founders'));assert(!registry.columns.includes('managers'));
-const output={passed:true,pages:data.companies.length+data.sectors.length+9,renderedFragments:rendered.length,companyTaskCombinations:prompts,internalLinkTargets:routes.size,sourceLinkOccurrences:sourceLinks,filters:'all / finance / wave / combined / 27 sectors / daytime / directory pagination / IDNO / empty / favorites / revenue sort',originalDownloads:'byte-identical',browserQA:'not performed: managed preview unavailable'};
+const output={passed:true,pages:data.companies.length+data.sectors.length+9,renderedFragments:rendered.length,companyTaskCombinations:prompts,internalLinkTargets:routes.size,sourceLinkOccurrences:sourceLinks,filters:'all / finance / wave / combined / 27 sectors / daytime / directory pagination / IDNO / empty / favorites / revenue sort',originalDownloads:'byte-identical',browserQA:'see QA-NOTES.md for live browser checks'};
 fs.writeFileSync('/tmp/energy-site-validation.json',JSON.stringify(output,null,2));console.log(JSON.stringify(output));
