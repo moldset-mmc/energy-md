@@ -20,7 +20,7 @@
     'Источники ↗':'Surse ↗','Потребление CNED ↗':'Consum CNED ↗',
     'Кандидаты для проверки.':'Candidați pentru verificare.',
     'Потребление не подтверждено счетами.':'Consumul nu este confirmat prin facturi.',
-    'Меню ☰':'Meniu ☰','Язык сайта':'Limba site-ului',
+    'Меню':'Meniu','Меню ☰':'Meniu ☰','Язык сайта':'Limba site-ului',
     'Атлас предприятий Молдовы: направления, источники, контакты и вопросы для поиска потребителей электроэнергии от 30 000 MDL в месяц.':'Atlasul întreprinderilor din Moldova: sectoare, surse, contacte și întrebări pentru identificarea consumatorilor de electricitate de la 30 000 MDL pe lună.'
   };
   if (lang === 'ro') {
