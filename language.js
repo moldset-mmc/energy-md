@@ -9,6 +9,8 @@
   document.documentElement.lang = lang;
   try { localStorage.setItem('energy-md-language', lang); } catch {}
   const shell = {
+    'Подготовлено специально для':'Pregătit special pentru',
+    'Энергетическая аналитика Молдовы':'Analiza sectorului energetic din Moldova',
     'К содержимому':'La conținut','Energy MD — главная':'Energy MD — acasă',
     'АТЛАС КОМПАНИЙ':'ATLASUL COMPANIILOR','Главная навигация':'Navigație principală',
     'Компании':'Companii','Направления':'Sectoare','Дневной приоритет':'Prioritate diurnă',
