@@ -9,3 +9,13 @@
 @media(max-width:380px){.brand{font-size:15px;gap:7px}.brand-mark{width:28px;height:34px}.brand small{font-size:7px}.header-tools{gap:5px}.language-switch button{min-width:36px}.hero h1{font-size:42px}.hero-board{padding:20px}.threshold .number{font-size:76px}.sector-grid{grid-template-columns:1fr}.filters{grid-template-columns:1fr}.filters .field{grid-column:1/-1}.panel{padding:17px}.data-list div{gap:12px}.hero-description{font-size:15px}.actions .button{width:100%}}
 
 h1,h2,h3{overflow-wrap:anywhere;hyphens:auto}
+
+/* Recipient identity shared by every page. */
+.client-masthead{background:var(--soft);border-bottom:1px solid var(--line)}
+.client-masthead-inner{max-width:1512px;margin:auto;padding:20px 4.4%;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.client-lockup{min-width:0;border-left:3px solid var(--green);padding-left:16px}
+.client-caption{display:block;font-size:11px;line-height:1.5;letter-spacing:.08em;text-transform:uppercase;color:var(--green)}
+.client-name{display:block;margin-top:4px;font-family:Manrope,Arial,sans-serif;font-size:32px;font-weight:800;line-height:1.15;letter-spacing:-.035em;color:var(--ink)}
+.client-context{max-width:260px;margin:0;font-size:13px;line-height:1.5;text-align:right;color:var(--green)}
+@media(max-width:1200px){.client-masthead-inner{padding-right:5%;padding-left:5%}}
+@media(max-width:720px){.client-masthead-inner{padding-top:16px;padding-bottom:16px}.client-lockup{padding-left:12px}.client-caption{font-size:10px;letter-spacing:.045em}.client-name{font-size:26px}.client-context{display:none}}
